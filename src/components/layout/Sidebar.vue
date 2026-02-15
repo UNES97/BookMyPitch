@@ -66,6 +66,7 @@ import {
   UsersIcon,
   CurrencyDollarIcon,
   Cog6ToothIcon,
+  TvIcon,
   ChevronLeftIcon,
   ChevronRightIcon
 } from '@heroicons/vue/24/outline'
@@ -80,6 +81,7 @@ const navItems = [
   { name: 'Terrains', route: 'fields', icon: 'MapIcon' },
   { name: 'Clients', route: 'customers', icon: 'UsersIcon' },
   { name: 'Paiements', route: 'payments', icon: 'CurrencyDollarIcon' },
+  { name: 'Tableau d\'Affichage', route: 'live-board', icon: 'TvIcon' },
   { name: 'Paramètres', route: 'settings', icon: 'Cog6ToothIcon' }
 ]
 
@@ -91,6 +93,7 @@ const iconMap = {
   MapIcon,
   UsersIcon,
   CurrencyDollarIcon,
+  TvIcon,
   Cog6ToothIcon
 }
 

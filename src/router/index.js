@@ -52,6 +52,12 @@ const routes = [
         name: 'settings',
         component: () => import('@views/Settings.vue'),
         meta: { title: 'Paramètres', icon: 'Cog6ToothIcon' }
+      },
+      {
+        path: 'live-board',
+        name: 'live-board',
+        component: () => import('@views/LiveBoard.vue'),
+        meta: { title: 'Tableau d\'Affichage', icon: 'TvIcon' }
       }
     ]
   }
