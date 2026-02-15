@@ -115,7 +115,7 @@
                 >
                   <div class="flex items-center justify-between">
                     <div class="font-semibold truncate flex-1">{{ booking.customerName }}</div>
-                    <span v-if="booking.isSubscription" class="text-yellow-300 ml-1" title="Subscription">⭐</span>
+                    <StarIcon v-if="booking.isSubscription" class="w-5 h-5 text-yellow-400 flex-shrink-0 ml-1" title="Subscription" />
                   </div>
                   <div class="text-xs opacity-90">{{ booking.startTime }} - {{ calculateEndTime(booking) }}</div>
                 </div>
@@ -172,7 +172,7 @@
                 >
                   <div class="flex items-center justify-between">
                     <div class="font-semibold truncate flex-1">{{ booking.fieldName }}</div>
-                    <span v-if="booking.isSubscription" class="text-yellow-300 ml-1" title="Subscription">⭐</span>
+                    <StarIcon v-if="booking.isSubscription" class="w-5 h-5 text-yellow-400 flex-shrink-0 ml-1" title="Subscription" />
                   </div>
                   <div class="text-xs opacity-90 truncate">{{ booking.customerName }}</div>
                 </div>
@@ -232,7 +232,10 @@
           <div>
             <p class="text-sm text-gray-500 dark:text-gray-400">Booking Type</p>
             <BaseBadge :variant="selectedBooking.isSubscription ? 'info' : 'gray'">
-              {{ selectedBooking.isSubscription ? '⭐ Subscription' : 'Regular' }}
+              <span class="flex items-center gap-1">
+                <StarIcon v-if="selectedBooking.isSubscription" class="w-4 h-4" />
+                {{ selectedBooking.isSubscription ? 'Subscription' : 'Regular' }}
+              </span>
             </BaseBadge>
           </div>
         </div>
@@ -332,6 +335,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon
 } from '@heroicons/vue/24/outline'
+import { StarIcon } from '@heroicons/vue/24/solid'
 import { format, addDays, startOfWeek, addWeeks, subWeeks, subDays } from 'date-fns'
 
 import BaseCard from '@components/ui/BaseCard.vue'
