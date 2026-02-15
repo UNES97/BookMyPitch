@@ -86,8 +86,8 @@
         </template>
 
         <template #cell-status="{ value }">
-          <BaseBadge :variant="value === 'completed' ? 'success' : 'warning'">
-            {{ value }}
+          <BaseBadge :variant="getStatusVariant(value)">
+            {{ translateStatus(value) }}
           </BaseBadge>
         </template>
 
@@ -111,6 +111,7 @@ import {
 } from '@heroicons/vue/24/outline'
 import { format } from 'date-fns'
 import { getRecentPayments } from '@utils/mockData'
+import { translateStatus, getStatusVariant } from '@/utils/statusTranslations'
 
 import StatsCard from '@components/dashboard/StatsCard.vue'
 import BaseCard from '@components/ui/BaseCard.vue'

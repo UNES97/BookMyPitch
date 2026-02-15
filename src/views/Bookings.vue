@@ -8,9 +8,14 @@
           Gérer toutes les réservations de terrains
         </p>
       </div>
-      <BaseButton @click="openCreateModal" :icon="PlusIcon">
-        Nouvelle Réservation
-      </BaseButton>
+      <div class="flex items-center gap-3">
+        <BaseButton @click="exportToCSV" variant="secondary" :icon="ArrowDownTrayIcon">
+          Exporter CSV
+        </BaseButton>
+        <BaseButton @click="openCreateModal" :icon="PlusIcon">
+          Nouvelle Réservation
+        </BaseButton>
+      </div>
     </div>
 
     <!-- Filters -->
@@ -50,13 +55,13 @@
       >
         <template #cell-status="{ value }">
           <BaseBadge :variant="getStatusVariant(value)">
-            {{ value }}
+            {{ translateStatus(value) }}
           </BaseBadge>
         </template>
 
         <template #cell-paymentStatus="{ value }">
-          <BaseBadge :variant="value === 'paid' ? 'success' : 'warning'">
-            {{ value }}
+          <BaseBadge :variant="getStatusVariant(value)">
+            {{ translateStatus(value) }}
           </BaseBadge>
         </template>
 
@@ -69,18 +74,34 @@
         </template>
 
         <template #actions="{ row }">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1">
+            <button
+              v-if="row.paymentStatus === 'unpaid'"
+              @click.stop="markAsPaid(row)"
+              class="p-1 text-success hover:bg-green-50 dark:hover:bg-green-900 rounded"
+              title="Marquer comme payé"
+            >
+              <CheckCircleIcon class="w-4 h-4" />
+            </button>
+            <button
+              v-if="row.status === 'pending'"
+              @click.stop="confirmBooking(row)"
+              class="p-1 text-success hover:bg-green-50 dark:hover:bg-green-900 rounded"
+              title="Confirmer"
+            >
+              <CheckIcon class="w-4 h-4" />
+            </button>
             <button
               @click.stop="editBooking(row)"
               class="p-1 text-primary hover:bg-primary-50 dark:hover:bg-primary-900 rounded"
-              title="Edit"
+              title="Modifier"
             >
               <PencilIcon class="w-4 h-4" />
             </button>
             <button
               @click.stop="confirmDelete(row)"
               class="p-1 text-danger hover:bg-red-50 dark:hover:bg-red-900 rounded"
-              title="Delete"
+              title="Supprimer"
             >
               <TrashIcon class="w-4 h-4" />
             </button>
@@ -259,9 +280,13 @@ import {
   MagnifyingGlassIcon,
   PencilIcon,
   TrashIcon,
-  CalendarIcon
+  CalendarIcon,
+  ArrowDownTrayIcon,
+  CheckCircleIcon,
+  CheckIcon
 } from '@heroicons/vue/24/outline'
 import { format } from 'date-fns'
+import { translateStatus, getStatusVariant as getStatusVariantUtil } from '@/utils/statusTranslations'
 
 import BaseCard from '@components/ui/BaseCard.vue'
 import BaseButton from '@components/ui/BaseButton.vue'
@@ -505,13 +530,17 @@ const handlePageChange = (page) => {
 }
 
 const getStatusVariant = (status) => {
-  const variants = {
-    confirmed: 'success',
-    pending: 'warning',
-    completed: 'info',
-    cancelled: 'danger'
-  }
-  return variants[status] || 'gray'
+  return getStatusVariantUtil(status)
+}
+
+// Mark booking as paid
+const markAsPaid = (booking) => {
+  bookingsStore.updateBooking(booking.id, { ...booking, paymentStatus: 'paid' })
+}
+
+// Confirm pending booking
+const confirmBooking = (booking) => {
+  bookingsStore.updateBooking(booking.id, { ...booking, status: 'confirmed' })
 }
 
 const formatDate = (dateString) => {
@@ -526,6 +555,44 @@ const calculatePrice = () => {
       bookingForm.value.price = field.hourlyRate * bookingForm.value.duration
     }
   }
+}
+
+// Export to CSV
+const exportToCSV = () => {
+  // CSV headers
+  const headers = ['ID', 'Client', 'Terrain', 'Date', 'Heure', 'Durée', 'Prix', 'Statut', 'Paiement']
+
+  // Convert bookings to CSV rows
+  const rows = filteredBookings.value.map(booking => [
+    booking.id,
+    booking.customerName,
+    booking.fieldName,
+    booking.date,
+    booking.startTime,
+    `${booking.duration}h`,
+    `${booking.price} DH`,
+    booking.status,
+    booking.paymentStatus
+  ])
+
+  // Combine headers and rows
+  const csvContent = [
+    headers.join(','),
+    ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+  ].join('\n')
+
+  // Create blob and download
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+  const link = document.createElement('a')
+  const url = URL.createObjectURL(blob)
+
+  link.setAttribute('href', url)
+  link.setAttribute('download', `reservations_${format(new Date(), 'yyyy-MM-dd')}.csv`)
+  link.style.visibility = 'hidden'
+
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
 }
 
 // Watch for changes in field or duration to auto-calculate price

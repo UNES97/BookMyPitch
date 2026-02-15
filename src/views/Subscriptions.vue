@@ -62,7 +62,7 @@
 
         <template #cell-status="{ value }">
           <BaseBadge :variant="getStatusVariant(value)">
-            {{ value }}
+            {{ translateStatus(value) }}
           </BaseBadge>
         </template>
 
@@ -209,6 +209,7 @@ import {
   XMarkIcon
 } from '@heroicons/vue/24/outline'
 import { format } from 'date-fns'
+import { translateStatus, getStatusVariant as getStatusVariantUtil } from '@/utils/statusTranslations'
 
 import StatsCard from '@components/dashboard/StatsCard.vue'
 import BaseCard from '@components/ui/BaseCard.vue'
@@ -340,12 +341,7 @@ const resetForm = () => {
 }
 
 const getStatusVariant = (status) => {
-  const variants = {
-    active: 'success',
-    paused: 'warning',
-    cancelled: 'danger'
-  }
-  return variants[status] || 'gray'
+  return getStatusVariantUtil(status)
 }
 
 const formatDate = (dateString) => {

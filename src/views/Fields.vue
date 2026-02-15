@@ -10,8 +10,8 @@
           <h3 class="font-semibold text-gray-900 dark:text-white">{{ field.name }}</h3>
           <p class="text-sm text-gray-500 dark:text-gray-400">{{ field.type }} - {{ field.size }}</p>
           <p class="text-lg font-bold text-primary mt-2">{{ field.hourlyRate  }} DH/heure</p>
-          <BaseBadge :variant="field.status === 'available' ? 'success' : 'warning'" class="mt-2">
-            {{ field.status }}
+          <BaseBadge :variant="getStatusVariant(field.status)" class="mt-2">
+            {{ translateStatus(field.status) }}
           </BaseBadge>
         </div>
       </div>
@@ -21,6 +21,7 @@
 
 <script setup>
 import { useFieldsStore } from '@stores/fields'
+import { translateStatus, getStatusVariant } from '@/utils/statusTranslations'
 import BaseCard from '@components/ui/BaseCard.vue'
 import BaseBadge from '@components/ui/BaseBadge.vue'
 
