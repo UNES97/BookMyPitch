@@ -3,13 +3,13 @@
     <!-- Page Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Calendar</h1>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Calendrier</h1>
         <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          View and manage bookings in calendar format
+          Voir et gérer les réservations en format calendrier
         </p>
       </div>
       <BaseButton @click="openCreateModal" :icon="PlusIcon">
-        New Booking
+        Nouvelle Réservation
       </BaseButton>
     </div>
 
@@ -45,7 +45,7 @@
             @click="goToToday"
             class="px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
           >
-            Today
+            Aujourd'hui
           </button>
           <button
             @click="navigateDate(1)"
@@ -186,17 +186,17 @@
     <!-- Booking Details Modal -->
     <BaseModal
       v-model="showDetailsModal"
-      title="Booking Details"
+      title="Détails de la réservation"
       size="md"
     >
       <div v-if="selectedBooking" class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Customer</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Client</p>
             <p class="font-medium text-gray-900 dark:text-white">{{ selectedBooking.customerName }}</p>
           </div>
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Field</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Terrain</p>
             <p class="font-medium text-gray-900 dark:text-white">{{ selectedBooking.fieldName }}</p>
           </div>
           <div>
@@ -204,37 +204,37 @@
             <p class="font-medium text-gray-900 dark:text-white">{{ formatDate(selectedBooking.date) }}</p>
           </div>
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Time</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Heure</p>
             <p class="font-medium text-gray-900 dark:text-white">
               {{ selectedBooking.startTime }} - {{ calculateEndTime(selectedBooking) }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Duration</p>
-            <p class="font-medium text-gray-900 dark:text-white">{{ selectedBooking.duration }} hours</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Durée</p>
+            <p class="font-medium text-gray-900 dark:text-white">{{ selectedBooking.duration }} heures</p>
           </div>
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Price</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Prix</p>
             <p class="font-medium text-gray-900 dark:text-white">{{ selectedBooking.price  }} DH</p>
           </div>
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Status</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Statut</p>
             <BaseBadge :variant="getStatusVariant(selectedBooking.status)">
               {{ selectedBooking.status }}
             </BaseBadge>
           </div>
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Payment</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Paiement</p>
             <BaseBadge :variant="selectedBooking.paymentStatus === 'paid' ? 'success' : 'warning'">
               {{ selectedBooking.paymentStatus }}
             </BaseBadge>
           </div>
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Booking Type</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Type de réservation</p>
             <BaseBadge :variant="selectedBooking.isSubscription ? 'info' : 'gray'">
               <span class="flex items-center gap-1">
                 <StarIcon v-if="selectedBooking.isSubscription" class="w-4 h-4" />
-                {{ selectedBooking.isSubscription ? 'Subscription' : 'Regular' }}
+                {{ selectedBooking.isSubscription ? 'Abonnement' : 'Régulier' }}
               </span>
             </BaseBadge>
           </div>
@@ -246,10 +246,10 @@
       </div>
       <template #footer>
         <BaseButton variant="secondary" @click="showDetailsModal = false">
-          Close
+          Fermer
         </BaseButton>
         <BaseButton @click="editSelectedBooking">
-          Edit Booking
+          Modifier
         </BaseButton>
       </template>
     </BaseModal>
@@ -373,8 +373,8 @@ const bookingForm = ref({
 
 // Views
 const views = [
-  { value: 'day', label: 'Day' },
-  { value: 'week', label: 'Week' }
+  { value: 'day', label: 'Jour' },
+  { value: 'week', label: 'Semaine' }
 ]
 
 // Time Slots (8 AM to 10 PM)

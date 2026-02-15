@@ -2,37 +2,37 @@
   <div class="space-y-6">
     <!-- Page Header -->
     <div>
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Tableau de bord</h1>
       <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-        Welcome back! Here's what's happening with your venue today.
+        Bienvenue ! Voici ce qui se passe dans votre complexe aujourd'hui.
       </p>
     </div>
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <StatsCard
-        label="Today's Bookings"
+        label="Réservations du jour"
         :value="bookingsStore.todayBookings.length"
-        change="+12% from yesterday"
+        change="+12% par rapport à hier"
         trend="up"
         :icon="CalendarIcon"
       />
       <StatsCard
-        label="Today's Revenue"
+        label="Revenus du jour"
         :value="`${paymentsStore.todayRevenue.toLocaleString()} DH`"
-        change="+8% from yesterday"
+        change="+8% par rapport à hier"
         trend="up"
         :icon="CurrencyDollarIcon"
       />
       <StatsCard
-        label="Active Fields"
+        label="Terrains actifs"
         :value="fieldsStore.availableFields.length"
         :icon="MapIcon"
       />
       <StatsCard
-        label="Pending Payments"
+        label="Paiements en attente"
         :value="paymentsStore.pendingCount"
-        :change="`${paymentsStore.pendingAmount.toLocaleString()} DH outstanding`"
+        :change="`${paymentsStore.pendingAmount.toLocaleString()} DH en attente`"
         trend="down"
         :icon="ExclamationTriangleIcon"
       />
@@ -41,14 +41,14 @@
     <!-- Charts Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Revenue Chart -->
-      <BaseCard title="Revenue Trend" subtitle="Last 30 days">
+      <BaseCard title="Tendance des revenus" subtitle="30 derniers jours">
         <div class="h-80">
           <LineChart :data="revenueChartData" />
         </div>
       </BaseCard>
 
       <!-- Bookings by Field -->
-      <BaseCard title="Bookings by Field" subtitle="Distribution">
+      <BaseCard title="Réservations par terrain" subtitle="Distribution">
         <div class="h-64 flex items-center justify-center">
           <div class="w-full max-w-xs">
             <DoughnutChart :data="bookingsChartData" />
@@ -60,7 +60,7 @@
     <!-- Tables Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Recent Bookings -->
-      <BaseCard title="Recent Bookings" subtitle="Latest 5 bookings">
+      <BaseCard title="Réservations récentes" subtitle="5 dernières réservations">
         <BaseTable
           :columns="bookingsColumns"
           :data="recentBookings"
@@ -75,7 +75,7 @@
       </BaseCard>
 
       <!-- Upcoming Matches -->
-      <BaseCard title="Upcoming Matches" subtitle="Next 5 bookings">
+      <BaseCard title="Matchs à venir" subtitle="5 prochaines réservations">
         <BaseTable
           :columns="upcomingColumns"
           :data="upcomingMatches"
@@ -121,16 +121,16 @@ const upcomingMatches = computed(() => bookingsStore.upcomingBookings.slice(0, 5
 // Table Columns
 const bookingsColumns = [
   { key: 'id', label: 'ID', sortable: true },
-  { key: 'customerName', label: 'Customer', sortable: true },
-  { key: 'fieldName', label: 'Field', sortable: true },
-  { key: 'status', label: 'Status', sortable: true }
+  { key: 'customerName', label: 'Client', sortable: true },
+  { key: 'fieldName', label: 'Terrain', sortable: true },
+  { key: 'status', label: 'Statut', sortable: true }
 ]
 
 const upcomingColumns = [
-  { key: 'customerName', label: 'Customer', sortable: true },
-  { key: 'fieldName', label: 'Field', sortable: true },
+  { key: 'customerName', label: 'Client', sortable: true },
+  { key: 'fieldName', label: 'Terrain', sortable: true },
   { key: 'date', label: 'Date', sortable: true },
-  { key: 'startTime', label: 'Time', sortable: true }
+  { key: 'startTime', label: 'Heure', sortable: true }
 ]
 
 // Revenue Chart Data
@@ -140,7 +140,7 @@ const revenueChartData = computed(() => {
     labels: last30Days.map(d => format(new Date(d.date), 'MMM dd')),
     datasets: [
       {
-        label: 'Revenue',
+        label: 'Revenus',
         data: last30Days.map(d => d.amount),
         borderColor: '#2563EB',
         backgroundColor: 'rgba(37, 99, 235, 0.1)',

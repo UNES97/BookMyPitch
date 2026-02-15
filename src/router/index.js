@@ -9,49 +9,49 @@ const routes = [
         path: '',
         name: 'dashboard',
         component: () => import('@views/Dashboard.vue'),
-        meta: { title: 'Dashboard', icon: 'HomeIcon' }
+        meta: { title: 'Tableau de bord', icon: 'HomeIcon' }
       },
       {
         path: 'calendar',
         name: 'calendar',
         component: () => import('@views/Calendar.vue'),
-        meta: { title: 'Calendar', icon: 'CalendarIcon' }
+        meta: { title: 'Calendrier', icon: 'CalendarIcon' }
       },
       {
         path: 'bookings',
         name: 'bookings',
         component: () => import('@views/Bookings.vue'),
-        meta: { title: 'Bookings', icon: 'ClipboardDocumentListIcon' }
+        meta: { title: 'Réservations', icon: 'ClipboardDocumentListIcon' }
       },
       {
         path: 'subscriptions',
         name: 'subscriptions',
         component: () => import('@views/Subscriptions.vue'),
-        meta: { title: 'Subscriptions', icon: 'ArrowPathIcon' }
+        meta: { title: 'Abonnements', icon: 'ArrowPathIcon' }
       },
       {
         path: 'fields',
         name: 'fields',
         component: () => import('@views/Fields.vue'),
-        meta: { title: 'Fields', icon: 'MapIcon' }
+        meta: { title: 'Terrains', icon: 'MapIcon' }
       },
       {
         path: 'customers',
         name: 'customers',
         component: () => import('@views/Customers.vue'),
-        meta: { title: 'Customers', icon: 'UsersIcon' }
+        meta: { title: 'Clients', icon: 'UsersIcon' }
       },
       {
         path: 'payments',
         name: 'payments',
         component: () => import('@views/Payments.vue'),
-        meta: { title: 'Payments', icon: 'CurrencyDollarIcon' }
+        meta: { title: 'Paiements', icon: 'CurrencyDollarIcon' }
       },
       {
         path: 'settings',
         name: 'settings',
         component: () => import('@views/Settings.vue'),
-        meta: { title: 'Settings', icon: 'Cog6ToothIcon' }
+        meta: { title: 'Paramètres', icon: 'Cog6ToothIcon' }
       }
     ]
   }

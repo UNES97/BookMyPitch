@@ -2,39 +2,39 @@
   <div class="space-y-6">
     <!-- Page Header -->
     <div>
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Payments & Revenue</h1>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Paiements & Revenus</h1>
       <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-        Track your revenue, payments, and financial performance
+        Suivez vos revenus, paiements et performances financières
       </p>
     </div>
 
     <!-- Revenue Stats -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <StatsCard
-        label="Today's Revenue"
+        label="Revenus du jour"
         :value="`${paymentsStore.todayRevenue.toLocaleString()} DH`"
-        change="+8% from yesterday"
+        change="+8% par rapport à hier"
         trend="up"
         :icon="CurrencyDollarIcon"
       />
       <StatsCard
-        label="This Week"
+        label="Cette semaine"
         :value="`${paymentsStore.weekRevenue.toLocaleString()} DH`"
-        change="+15% from last week"
+        change="+15% par rapport à la semaine dernière"
         trend="up"
         :icon="ArrowTrendingUpIcon"
       />
       <StatsCard
-        label="This Month"
+        label="Ce mois"
         :value="`${paymentsStore.monthRevenue.toLocaleString()} DH`"
-        change="+23% from last month"
+        change="+23% par rapport au mois dernier"
         trend="up"
         :icon="ChartBarIcon"
       />
       <StatsCard
-        label="Pending Payments"
+        label="Paiements en attente"
         :value="`${paymentsStore.pendingAmount.toLocaleString()} DH`"
-        :change="`${paymentsStore.pendingCount} bookings`"
+        :change="`${paymentsStore.pendingCount} réservations`"
         trend="neutral"
         :icon="ExclamationTriangleIcon"
       />
@@ -43,14 +43,14 @@
     <!-- Charts Row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Daily Revenue Chart -->
-      <BaseCard title="Daily Revenue" subtitle="Last 30 days">
+      <BaseCard title="Revenus quotidiens" subtitle="30 derniers jours">
         <div class="h-80">
           <BarChart :data="dailyRevenueChartData" />
         </div>
       </BaseCard>
 
       <!-- Payment Methods Distribution -->
-      <BaseCard title="Payment Methods" subtitle="Distribution">
+      <BaseCard title="Méthodes de paiement" subtitle="Distribution">
         <div class="h-64 flex items-center justify-center">
           <div class="w-full max-w-xs">
             <DoughnutChart :data="paymentMethodsChartData" />
@@ -60,14 +60,14 @@
     </div>
 
     <!-- Monthly Revenue Trend -->
-    <BaseCard title="Monthly Revenue Trend" subtitle="Last 12 months">
+    <BaseCard title="Tendance des revenus mensuels" subtitle="12 derniers mois">
       <div class="h-96">
         <LineChart :data="monthlyRevenueChartData" />
       </div>
     </BaseCard>
 
     <!-- Recent Payments Table -->
-    <BaseCard title="Recent Payments" subtitle="Latest transactions">
+    <BaseCard title="Paiements récents" subtitle="Dernières transactions">
       <BaseTable
         :columns="paymentsColumns"
         :data="recentPayments"

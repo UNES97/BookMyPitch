@@ -73,14 +73,14 @@ import {
 const uiStore = useUIStore()
 
 const navItems = [
-  { name: 'Dashboard', route: 'dashboard', icon: 'HomeIcon' },
-  { name: 'Calendar', route: 'calendar', icon: 'CalendarIcon' },
-  { name: 'Bookings', route: 'bookings', icon: 'ClipboardDocumentListIcon' },
-  { name: 'Subscriptions', route: 'subscriptions', icon: 'ArrowPathIcon' },
-  { name: 'Fields', route: 'fields', icon: 'MapIcon' },
-  { name: 'Customers', route: 'customers', icon: 'UsersIcon' },
-  { name: 'Payments', route: 'payments', icon: 'CurrencyDollarIcon' },
-  { name: 'Settings', route: 'settings', icon: 'Cog6ToothIcon' }
+  { name: 'Tableau de bord', route: 'dashboard', icon: 'HomeIcon' },
+  { name: 'Calendrier', route: 'calendar', icon: 'CalendarIcon' },
+  { name: 'Réservations', route: 'bookings', icon: 'ClipboardDocumentListIcon' },
+  { name: 'Abonnements', route: 'subscriptions', icon: 'ArrowPathIcon' },
+  { name: 'Terrains', route: 'fields', icon: 'MapIcon' },
+  { name: 'Clients', route: 'customers', icon: 'UsersIcon' },
+  { name: 'Paiements', route: 'payments', icon: 'CurrencyDollarIcon' },
+  { name: 'Paramètres', route: 'settings', icon: 'Cog6ToothIcon' }
 ]
 
 const iconMap = {

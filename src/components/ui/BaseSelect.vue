@@ -37,7 +37,7 @@
               v-if="filteredOptions.length === 0 && query !== ''"
               class="relative cursor-default select-none py-2 px-4 text-gray-700 dark:text-gray-300"
             >
-              No results found.
+              Aucun résultat trouvé.
             </div>
 
             <ComboboxOption

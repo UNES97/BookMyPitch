@@ -3,13 +3,13 @@
     <!-- Page Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Customers</h1>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Clients</h1>
         <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          Manage customer profiles and booking history
+          Gérer les profils clients et l'historique des réservations
         </p>
       </div>
       <BaseButton @click="openCreateModal" :icon="PlusIcon">
-        Add Customer
+        Ajouter un Client
       </BaseButton>
     </div>
 
@@ -19,14 +19,14 @@
         <BaseCard padding="md">
           <BaseInput
             v-model="searchQuery"
-            placeholder="Search by name, email, or phone..."
+            placeholder="Rechercher par nom, email ou téléphone..."
             :prefix-icon="MagnifyingGlassIcon"
           />
         </BaseCard>
       </div>
       <BaseCard padding="md">
         <div class="text-center">
-          <p class="text-sm text-gray-500 dark:text-gray-400">Total Customers</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Total Clients</p>
           <p class="text-3xl font-bold text-primary mt-1">{{ customersStore.customers.length }}</p>
         </div>
       </BaseCard>
@@ -51,7 +51,7 @@
 
         <template #cell-subscriptionStatus="{ value }">
           <BaseBadge :variant="value === 'subscribed' ? 'info' : 'gray'">
-            {{ value === 'subscribed' ? 'Subscribed' : 'Regular' }}
+            {{ value === 'subscribed' ? 'Abonné' : 'Régulier' }}
           </BaseBadge>
         </template>
 
@@ -68,14 +68,14 @@
             <button
               @click.stop="viewCustomer(row)"
               class="p-1 text-primary hover:bg-primary-50 dark:hover:bg-primary-900 rounded"
-              title="View Details"
+              title="Voir les détails"
             >
               <EyeIcon class="w-4 h-4" />
             </button>
             <button
               @click.stop="editCustomer(row)"
               class="p-1 text-primary hover:bg-primary-50 dark:hover:bg-primary-900 rounded"
-              title="Edit"
+              title="Modifier"
             >
               <PencilIcon class="w-4 h-4" />
             </button>
@@ -85,9 +85,9 @@
         <template #empty>
           <div class="text-center py-12">
             <UsersIcon class="mx-auto h-12 w-12 text-gray-400" />
-            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">No customers found</h3>
+            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">Aucun client trouvé</h3>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Get started by adding a new customer.
+              Commencez par ajouter un nouveau client.
             </p>
           </div>
         </template>
@@ -112,11 +112,11 @@
             <p class="font-medium text-gray-900 dark:text-white">{{ selectedCustomer.phone }}</p>
           </div>
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Member Since</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Membre depuis</p>
             <p class="font-medium text-gray-900 dark:text-white">{{ formatDate(selectedCustomer.joinedDate) }}</p>
           </div>
           <div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Status</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Statut</p>
             <BaseBadge :variant="selectedCustomer.status === 'active' ? 'success' : 'gray'">
               {{ selectedCustomer.status }}
             </BaseBadge>
@@ -126,24 +126,24 @@
         <!-- Stats -->
         <div class="grid grid-cols-3 gap-4">
           <BaseCard padding="sm">
-            <p class="text-sm text-gray-500 dark:text-gray-400">Total Bookings</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Total Réservations</p>
             <p class="text-2xl font-bold text-primary mt-1">{{ selectedCustomer.totalBookings }}</p>
           </BaseCard>
           <BaseCard padding="sm">
-            <p class="text-sm text-gray-500 dark:text-gray-400">Total Revenue</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Total Revenus</p>
             <p class="text-2xl font-bold text-success mt-1">{{ selectedCustomer.totalRevenue.toLocaleString() }} DH</p>
           </BaseCard>
           <BaseCard padding="sm">
-            <p class="text-sm text-gray-500 dark:text-gray-400">Subscription</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Abonnement</p>
             <BaseBadge :variant="selectedCustomer.subscriptionStatus === 'subscribed' ? 'info' : 'gray'" class="mt-2">
-              {{ selectedCustomer.subscriptionStatus === 'subscribed' ? 'Active' : 'None' }}
+              {{ selectedCustomer.subscriptionStatus === 'subscribed' ? 'Actif' : 'Aucun' }}
             </BaseBadge>
           </BaseCard>
         </div>
 
         <!-- Booking History -->
         <div>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Booking History</h3>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Historique des réservations</h3>
           <BaseTable
             :columns="bookingHistoryColumns"
             :data="customerBookings"
@@ -165,37 +165,37 @@
     <!-- Create/Edit Customer Modal -->
     <BaseModal
       v-model="showCustomerModal"
-      :title="editMode ? 'Edit Customer' : 'Add New Customer'"
+      :title="editMode ? 'Modifier le client' : 'Ajouter un nouveau client'"
       size="md"
     >
       <form @submit.prevent="saveCustomer" class="space-y-4">
         <BaseInput
           v-model="customerForm.name"
-          label="Full Name"
+          label="Nom complet"
           required
-          placeholder="Enter customer name"
+          placeholder="Entrer le nom du client"
         />
         <BaseInput
           v-model="customerForm.email"
           label="Email"
           type="email"
           required
-          placeholder="customer@example.com"
+          placeholder="client@exemple.com"
         />
         <BaseInput
           v-model="customerForm.phone"
-          label="Phone"
+          label="Téléphone"
           type="tel"
           required
-          placeholder="+971 50 XXX XXXX"
+          placeholder="+212 6 XX XX XX XX"
         />
 
         <div class="flex justify-end gap-3 pt-4">
           <BaseButton type="button" variant="secondary" @click="showCustomerModal = false">
-            Cancel
+            Annuler
           </BaseButton>
           <BaseButton type="submit" :loading="saving">
-            {{ editMode ? 'Update' : 'Add' }} Customer
+            {{ editMode ? 'Modifier' : 'Ajouter' }} le client
           </BaseButton>
         </div>
       </form>
@@ -258,21 +258,21 @@ const pagination = computed(() => ({
 
 // Table Columns
 const columns = [
-  { key: 'name', label: 'Name', sortable: true },
+  { key: 'name', label: 'Nom', sortable: true },
   { key: 'email', label: 'Email', sortable: true },
-  { key: 'phone', label: 'Phone', sortable: true },
-  { key: 'totalBookings', label: 'Bookings', sortable: true },
-  { key: 'totalRevenue', label: 'Revenue', sortable: true },
+  { key: 'phone', label: 'Téléphone', sortable: true },
+  { key: 'totalBookings', label: 'Réservations', sortable: true },
+  { key: 'totalRevenue', label: 'Revenus', sortable: true },
   { key: 'subscriptionStatus', label: 'Type', sortable: true },
-  { key: 'status', label: 'Status', sortable: true }
+  { key: 'status', label: 'Statut', sortable: true }
 ]
 
 const bookingHistoryColumns = [
-  { key: 'id', label: 'Booking ID' },
-  { key: 'fieldName', label: 'Field' },
+  { key: 'id', label: 'ID Réservation' },
+  { key: 'fieldName', label: 'Terrain' },
   { key: 'date', label: 'Date' },
-  { key: 'status', label: 'Status' },
-  { key: 'price', label: 'Amount' }
+  { key: 'status', label: 'Statut' },
+  { key: 'price', label: 'Montant' }
 ]
 
 // Filtered Customers

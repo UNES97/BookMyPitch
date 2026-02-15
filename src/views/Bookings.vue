@@ -3,13 +3,13 @@
     <!-- Page Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Bookings</h1>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Réservations</h1>
         <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          Manage all field bookings and reservations
+          Gérer toutes les réservations de terrains
         </p>
       </div>
       <BaseButton @click="openCreateModal" :icon="PlusIcon">
-        New Booking
+        Nouvelle Réservation
       </BaseButton>
     </div>
 
@@ -18,21 +18,21 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <BaseInput
           v-model="searchQuery"
-          placeholder="Search by customer name..."
+          placeholder="Rechercher par nom de client..."
           :prefix-icon="MagnifyingGlassIcon"
         />
         <BaseSelect
           v-model="filterStatus"
-          placeholder="All Statuses"
+          placeholder="Tous les statuts"
           :options="statusOptions"
         />
         <BaseSelect
           v-model="filterField"
-          placeholder="All Fields"
+          placeholder="Tous les terrains"
           :options="fieldOptions"
         />
         <BaseButton variant="secondary" @click="clearFilters" block>
-          Clear Filters
+          Effacer les filtres
         </BaseButton>
       </div>
     </BaseCard>
@@ -90,13 +90,13 @@
         <template #empty>
           <div class="text-center py-12">
             <CalendarIcon class="mx-auto h-12 w-12 text-gray-400" />
-            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">No bookings found</h3>
+            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">Aucune réservation trouvée</h3>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Get started by creating a new booking.
+              Commencez par créer une nouvelle réservation.
             </p>
             <div class="mt-6">
               <BaseButton @click="openCreateModal" :icon="PlusIcon">
-                New Booking
+                Nouvelle Réservation
               </BaseButton>
             </div>
           </div>
@@ -107,14 +107,14 @@
     <!-- Create/Edit Booking Modal -->
     <BaseModal
       v-model="showBookingModal"
-      :title="editMode ? 'Edit Booking' : 'Create New Booking'"
+      :title="editMode ? 'Modifier la réservation' : 'Créer une nouvelle réservation'"
       size="lg"
     >
       <form @submit.prevent="saveBooking" class="space-y-4">
         <!-- Customer Type Selection -->
         <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Customer
+            Client
           </label>
           <div class="flex gap-4">
             <label class="flex items-center cursor-pointer">
@@ -124,7 +124,7 @@
                 value="existing"
                 class="mr-2"
               />
-              <span class="text-sm">Existing Customer</span>
+              <span class="text-sm">Client existant</span>
             </label>
             <label class="flex items-center cursor-pointer">
               <input
@@ -133,7 +133,7 @@
                 value="new"
                 class="mr-2"
               />
-              <span class="text-sm">New Customer</span>
+              <span class="text-sm">Nouveau client</span>
             </label>
           </div>
         </div>
@@ -142,10 +142,10 @@
         <div v-if="customerType === 'existing'" class="grid grid-cols-1 gap-4">
           <BaseSelect
             v-model="bookingForm.customerId"
-            label="Select Customer"
+            label="Sélectionner un client"
             required
             :options="customerOptions"
-            placeholder="Choose from existing customers"
+            placeholder="Choisir parmi les clients existants"
           />
         </div>
 
@@ -153,21 +153,21 @@
         <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <BaseInput
             v-model="newCustomer.name"
-            label="Customer Name"
+            label="Nom du client"
             required
-            placeholder="Enter full name"
+            placeholder="Entrer le nom complet"
           />
           <BaseInput
             v-model="newCustomer.phone"
-            label="Phone Number"
+            label="Numéro de téléphone"
             required
             placeholder="+212 6 XX XX XX XX"
           />
           <BaseInput
             v-model="newCustomer.email"
-            label="Email (Optional)"
+            label="Email (Optionnel)"
             type="email"
-            placeholder="customer@example.com"
+            placeholder="client@exemple.com"
           />
         </div>
 
@@ -175,26 +175,26 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
           <BaseSelect
             v-model="bookingForm.fieldId"
-            label="Field"
+            label="Terrain"
             required
             :options="fieldOptionsForForm"
-            placeholder="Select field"
+            placeholder="Sélectionner un terrain"
           />
           <BaseDatePicker
             v-model="bookingForm.date"
             label="Date"
             required
-            placeholder="Select booking date"
+            placeholder="Sélectionner la date de réservation"
           />
           <BaseTimePicker
             v-model="bookingForm.startTime"
-            label="Start Time"
+            label="Heure de début"
             required
-            placeholder="Select start time"
+            placeholder="Sélectionner l'heure de début"
           />
           <BaseInput
             v-model="bookingForm.duration"
-            label="Duration (hours)"
+            label="Durée (heures)"
             type="number"
             step="1"
             min="1"
@@ -203,7 +203,7 @@
           />
           <BaseInput
             v-model="bookingForm.price"
-            label="Price (DH)"
+            label="Prix (DH)"
             type="number"
             min="0"
             required
@@ -212,17 +212,17 @@
 
         <BaseTextarea
           v-model="bookingForm.notes"
-          label="Notes (Optional)"
-          placeholder="Add any special requirements or notes..."
+          label="Notes (Optionnel)"
+          placeholder="Ajouter des exigences ou notes spéciales..."
           :rows="3"
         />
 
         <div class="flex justify-end gap-3 pt-4">
           <BaseButton type="button" variant="secondary" @click="showBookingModal = false">
-            Cancel
+            Annuler
           </BaseButton>
           <BaseButton type="submit" :loading="saving">
-            {{ editMode ? 'Update' : 'Create' }} Booking
+            {{ editMode ? 'Modifier' : 'Créer' }} la réservation
           </BaseButton>
         </div>
       </form>
@@ -231,18 +231,18 @@
     <!-- Delete Confirmation Modal -->
     <BaseModal
       v-model="showDeleteModal"
-      title="Delete Booking"
+      title="Supprimer la réservation"
       size="sm"
     >
       <p class="text-sm text-gray-600 dark:text-gray-300">
-        Are you sure you want to delete this booking? This action cannot be undone.
+        Êtes-vous sûr de vouloir supprimer cette réservation ? Cette action ne peut pas être annulée.
       </p>
       <template #footer>
         <BaseButton variant="secondary" @click="showDeleteModal = false">
-          Cancel
+          Annuler
         </BaseButton>
         <BaseButton variant="danger" @click="deleteBooking" :loading="deleting">
-          Delete
+          Supprimer
         </BaseButton>
       </template>
     </BaseModal>
@@ -316,14 +316,14 @@ const selectedBooking = ref(null)
 // Table Columns
 const columns = [
   { key: 'id', label: 'ID', sortable: true, width: '100px' },
-  { key: 'customerName', label: 'Customer', sortable: true },
-  { key: 'fieldName', label: 'Field', sortable: true },
+  { key: 'customerName', label: 'Client', sortable: true },
+  { key: 'fieldName', label: 'Terrain', sortable: true },
   { key: 'date', label: 'Date', sortable: true },
-  { key: 'startTime', label: 'Time', sortable: true },
-  { key: 'duration', label: 'Duration', sortable: true },
-  { key: 'price', label: 'Price', sortable: true },
-  { key: 'status', label: 'Status', sortable: true },
-  { key: 'paymentStatus', label: 'Payment', sortable: true }
+  { key: 'startTime', label: 'Heure', sortable: true },
+  { key: 'duration', label: 'Durée', sortable: true },
+  { key: 'price', label: 'Prix', sortable: true },
+  { key: 'status', label: 'Statut', sortable: true },
+  { key: 'paymentStatus', label: 'Paiement', sortable: true }
 ]
 
 // Pagination
@@ -338,15 +338,15 @@ const pagination = computed(() => ({
 
 // Filter Options
 const statusOptions = computed(() => [
-  { value: '', label: 'All Statuses' },
-  { value: 'confirmed', label: 'Confirmed' },
-  { value: 'pending', label: 'Pending' },
-  { value: 'completed', label: 'Completed' },
-  { value: 'cancelled', label: 'Cancelled' }
+  { value: '', label: 'Tous les statuts' },
+  { value: 'confirmed', label: 'Confirmé' },
+  { value: 'pending', label: 'En attente' },
+  { value: 'completed', label: 'Terminé' },
+  { value: 'cancelled', label: 'Annulé' }
 ])
 
 const fieldOptions = computed(() => [
-  { value: '', label: 'All Fields' },
+  { value: '', label: 'Tous les terrains' },
   ...fieldsStore.fields.map(f => ({ value: f.id, label: f.name }))
 ])
 

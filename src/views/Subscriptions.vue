@@ -3,33 +3,33 @@
     <!-- Page Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Subscriptions</h1>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Abonnements</h1>
         <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          Manage recurring bookings and subscriptions
+          Gérer les réservations récurrentes et les abonnements
         </p>
       </div>
       <BaseButton @click="openCreateModal" :icon="PlusIcon">
-        New Subscription
+        Nouvel Abonnement
       </BaseButton>
     </div>
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <StatsCard
-        label="Active Subscriptions"
+        label="Abonnements actifs"
         :value="subscriptionsStore.activeSubscriptions.length"
         trend="up"
         :icon="ArrowPathIcon"
       />
       <StatsCard
-        label="Monthly Revenue"
+        label="Revenus mensuels"
         :value="`${subscriptionsStore.totalMonthlyRevenue.toLocaleString()} DH`"
-        change="From subscriptions"
+        change="Des abonnements"
         trend="neutral"
         :icon="CurrencyDollarIcon"
       />
       <StatsCard
-        label="Paused"
+        label="En pause"
         :value="subscriptionsStore.pausedSubscriptions.length"
         trend="neutral"
         :icon="PauseIcon"
@@ -72,7 +72,7 @@
               v-if="row.status === 'active'"
               @click.stop="pauseSubscription(row)"
               class="p-1 text-warning hover:bg-yellow-50 dark:hover:bg-yellow-900 rounded"
-              title="Pause"
+              title="Mettre en pause"
             >
               <PauseIcon class="w-4 h-4" />
             </button>
@@ -80,14 +80,14 @@
               v-if="row.status === 'paused'"
               @click.stop="resumeSubscription(row)"
               class="p-1 text-success hover:bg-green-50 dark:hover:bg-green-900 rounded"
-              title="Resume"
+              title="Reprendre"
             >
               <PlayIcon class="w-4 h-4" />
             </button>
             <button
               @click.stop="cancelSubscription(row)"
               class="p-1 text-danger hover:bg-red-50 dark:hover:bg-red-900 rounded"
-              title="Cancel"
+              title="Annuler"
             >
               <XMarkIcon class="w-4 h-4" />
             </button>
@@ -245,12 +245,12 @@ const form = ref({
 // Table Columns
 const columns = [
   { key: 'id', label: 'ID', sortable: true, width: '100px' },
-  { key: 'customerName', label: 'Customer', sortable: true },
-  { key: 'fieldName', label: 'Field', sortable: true },
-  { key: 'schedule', label: 'Schedule' },
-  { key: 'monthlyRate', label: 'Monthly Rate', sortable: true },
-  { key: 'nextBooking', label: 'Next Booking', sortable: true },
-  { key: 'status', label: 'Status', sortable: true }
+  { key: 'customerName', label: 'Client', sortable: true },
+  { key: 'fieldName', label: 'Terrain', sortable: true },
+  { key: 'schedule', label: 'Horaire' },
+  { key: 'monthlyRate', label: 'Tarif mensuel', sortable: true },
+  { key: 'nextBooking', label: 'Prochaine réservation', sortable: true },
+  { key: 'status', label: 'Statut', sortable: true }
 ]
 
 // Options

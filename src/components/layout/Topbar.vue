@@ -33,7 +33,7 @@
             <MagnifyingGlassIcon class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Rechercher..."
               class="pl-10 pr-4 py-2 w-64 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
@@ -74,7 +74,7 @@
                   </div>
                 </MenuItem>
                 <div v-if="uiStore.notifications.length === 0" class="px-4 py-8 text-center text-sm text-gray-500 dark:text-gray-400">
-                  No notifications
+                  Aucune notification
                 </div>
               </div>
             </MenuItems>
@@ -99,7 +99,7 @@
           >
             <MenuItems class="absolute right-0 mt-2 w-56 origin-top-right bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden">
               <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                <p class="text-sm font-medium text-gray-900 dark:text-white">Admin User</p>
+                <p class="text-sm font-medium text-gray-900 dark:text-white">Utilisateur Admin</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">admin@bookmypitch.com</p>
               </div>
               <div class="py-2">
@@ -111,7 +111,7 @@
                     ]"
                   >
                     <UserIcon class="w-4 h-4 inline mr-2" />
-                    Profile
+                    Profil
                   </button>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
@@ -122,7 +122,7 @@
                     ]"
                   >
                     <ArrowRightOnRectangleIcon class="w-4 h-4 inline mr-2" />
-                    Logout
+                    Déconnexion
                   </button>
                 </MenuItem>
               </div>
