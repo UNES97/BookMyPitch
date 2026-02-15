@@ -111,14 +111,68 @@
       size="lg"
     >
       <form @submit.prevent="saveBooking" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Customer Type Selection -->
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Customer
+          </label>
+          <div class="flex gap-4">
+            <label class="flex items-center cursor-pointer">
+              <input
+                type="radio"
+                v-model="customerType"
+                value="existing"
+                class="mr-2"
+              />
+              <span class="text-sm">Existing Customer</span>
+            </label>
+            <label class="flex items-center cursor-pointer">
+              <input
+                type="radio"
+                v-model="customerType"
+                value="new"
+                class="mr-2"
+              />
+              <span class="text-sm">New Customer</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Existing Customer Selection -->
+        <div v-if="customerType === 'existing'" class="grid grid-cols-1 gap-4">
           <BaseSelect
             v-model="bookingForm.customerId"
-            label="Customer"
+            label="Select Customer"
             required
             :options="customerOptions"
-            placeholder="Select customer"
+            placeholder="Choose from existing customers"
           />
+        </div>
+
+        <!-- New Customer Form -->
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <BaseInput
+            v-model="newCustomer.name"
+            label="Customer Name"
+            required
+            placeholder="Enter full name"
+          />
+          <BaseInput
+            v-model="newCustomer.phone"
+            label="Phone Number"
+            required
+            placeholder="+212 6 XX XX XX XX"
+          />
+          <BaseInput
+            v-model="newCustomer.email"
+            label="Email (Optional)"
+            type="email"
+            placeholder="customer@example.com"
+          />
+        </div>
+
+        <!-- Booking Details -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
           <BaseSelect
             v-model="bookingForm.fieldId"
             label="Field"
@@ -142,8 +196,9 @@
             v-model="bookingForm.duration"
             label="Duration (hours)"
             type="number"
-            step="0.5"
-            min="0.5"
+            step="1"
+            min="1"
+            max="2"
             required
           />
           <BaseInput
@@ -195,7 +250,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useBookingsStore } from '@stores/bookings'
 import { useFieldsStore } from '@stores/fields'
 import { useCustomersStore } from '@stores/customers'
@@ -235,6 +290,9 @@ const editMode = ref(false)
 const saving = ref(false)
 const deleting = ref(false)
 
+// Customer Type
+const customerType = ref('existing')
+
 // Form Data
 const bookingForm = ref({
   id: null,
@@ -245,6 +303,12 @@ const bookingForm = ref({
   duration: 2,
   price: 100,
   notes: ''
+})
+
+const newCustomer = ref({
+  name: '',
+  phone: '',
+  email: ''
 })
 
 const selectedBooking = ref(null)
@@ -335,6 +399,7 @@ const openCreateModal = () => {
 
 const editBooking = (booking) => {
   editMode.value = true
+  customerType.value = 'existing'
   bookingForm.value = {
     id: booking.id,
     customerId: booking.customerId,
@@ -355,12 +420,28 @@ const viewBooking = (booking) => {
 const saveBooking = async () => {
   saving.value = true
 
-  // Get customer and field names
-  const customer = customersStore.customers.find(c => c.id === bookingForm.value.customerId)
+  let customer
+  let customerId = bookingForm.value.customerId
+
+  // If creating a new customer, add them first
+  if (customerType.value === 'new') {
+    customer = customersStore.createCustomer({
+      name: newCustomer.value.name,
+      phone: newCustomer.value.phone,
+      email: newCustomer.value.email || '',
+      notes: ''
+    })
+    customerId = customer.id
+  } else {
+    // Use existing customer
+    customer = customersStore.customers.find(c => c.id === customerId)
+  }
+
   const field = fieldsStore.fields.find(f => f.id === bookingForm.value.fieldId)
 
   const bookingData = {
     ...bookingForm.value,
+    customerId,
     customerName: customer?.name || '',
     customerPhone: customer?.phone || '',
     fieldName: field?.name || ''
@@ -395,15 +476,21 @@ const deleteBooking = () => {
 }
 
 const resetForm = () => {
+  customerType.value = 'existing'
   bookingForm.value = {
     id: null,
     customerId: '',
     fieldId: '',
     date: '',
     startTime: '',
-    duration: 2,
-    price: 100,
+    duration: 1,
+    price: 350,
     notes: ''
+  }
+  newCustomer.value = {
+    name: '',
+    phone: '',
+    email: ''
   }
 }
 
@@ -430,4 +517,18 @@ const getStatusVariant = (status) => {
 const formatDate = (dateString) => {
   return format(new Date(dateString), 'MMM dd, yyyy')
 }
+
+// Auto-calculate price based on field and duration
+const calculatePrice = () => {
+  if (bookingForm.value.fieldId && bookingForm.value.duration) {
+    const field = fieldsStore.fields.find(f => f.id === bookingForm.value.fieldId)
+    if (field) {
+      bookingForm.value.price = field.hourlyRate * bookingForm.value.duration
+    }
+  }
+}
+
+// Watch for changes in field or duration to auto-calculate price
+watch(() => bookingForm.value.fieldId, calculatePrice)
+watch(() => bookingForm.value.duration, calculatePrice)
 </script>
